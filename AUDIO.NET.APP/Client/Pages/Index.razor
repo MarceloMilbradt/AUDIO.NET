@@ -25,6 +25,9 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+
         user = await Http.GetFromJsonAsync<PrivateUser>("user");
+        if (user != null)
+            Http.GetAsync("Listen");
     }
 }

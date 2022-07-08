@@ -12,7 +12,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Day)
+    .WriteTo.File("log-.log", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
 builder.Services.AddLogging(loggingBuilder =>loggingBuilder.AddSerilog(Log.Logger));

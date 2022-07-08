@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AUDIO.NET.APP.Server", "AUDIO.NET.APP\Server\AUDIO.NET.APP.Server.csproj", "{66E14CC3-A09F-4D23-8090-66153CA2BED5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19C550D9-8B13-4720-A430-2DFE88F12AF5} = {19C550D9-8B13-4720-A430-2DFE88F12AF5}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AUDIO.NET.APP.Client", "AUDIO.NET.APP\Client\AUDIO.NET.APP.Client.csproj", "{27A734A6-6105-4305-AF29-517995E223D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AUDIO.NET.APP.Shared", "AUDIO.NET.APP\Shared\AUDIO.NET.APP.Shared.csproj", "{846EBEC4-4985-4978-8C4A-39C7E9D8FA41}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "ConnectorServer", "ConnectorServer\ConnectorServer.njsproj", "{19C550D9-8B13-4720-A430-2DFE88F12AF5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66E14CC3-A09F-4D23-8090-66153CA2BED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66E14CC3-A09F-4D23-8090-66153CA2BED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66E14CC3-A09F-4D23-8090-66153CA2BED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66E14CC3-A09F-4D23-8090-66153CA2BED5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27A734A6-6105-4305-AF29-517995E223D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27A734A6-6105-4305-AF29-517995E223D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27A734A6-6105-4305-AF29-517995E223D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27A734A6-6105-4305-AF29-517995E223D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{846EBEC4-4985-4978-8C4A-39C7E9D8FA41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{846EBEC4-4985-4978-8C4A-39C7E9D8FA41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{846EBEC4-4985-4978-8C4A-39C7E9D8FA41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{846EBEC4-4985-4978-8C4A-39C7E9D8FA41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19C550D9-8B13-4720-A430-2DFE88F12AF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19C550D9-8B13-4720-A430-2DFE88F12AF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19C550D9-8B13-4720-A430-2DFE88F12AF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19C550D9-8B13-4720-A430-2DFE88F12AF5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B7D28E50-B2DD-4664-8300-AF7DEA251D7E}
+	EndGlobalSection
+EndGlobal

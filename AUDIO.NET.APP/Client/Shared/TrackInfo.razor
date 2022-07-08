@@ -1,0 +1,18 @@
+﻿@using SpotifyAPI.Web
+@if (Track == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div>
+        <h2>@Track.Name</h2>
+        <p>@Track.Album.Name @Track.Album.ReleaseDate - @Track.Artists.First().Name</p>
+        <img src="@Track.Album.Images.First().Url" />
+    </div>
+}
+
+@code {
+    [Parameter]
+    public FullTrack? Track { get; set; }
+}

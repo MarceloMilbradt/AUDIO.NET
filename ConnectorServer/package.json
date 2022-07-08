@@ -1,0 +1,15 @@
+{
+  "name": "connector-server",
+  "version": "0.0.0",
+  "description": "ConnectorServer",
+  "main": "app.js",
+  "author": {
+    "name": ""
+  },
+  "dependencies": {
+    "create-nodew-exe": "^1.0.10",
+    "express": "^4.18.1",
+    "pkg": "^5.7.0",
+    "tuyapi": "^7.3.0"
+  }
+}

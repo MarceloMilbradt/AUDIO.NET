@@ -1,0 +1,12 @@
+﻿@page "/login"
+@using AUDIO.NET.APP.Shared
+@inject NavigationManager NavManager
+<PageTitle>Login with Spotify</PageTitle>
+
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+       NavManager.NavigateTo("auth/login", forceLoad: true);
+    }
+}

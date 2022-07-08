@@ -1,0 +1,68 @@
+﻿@using SpotifyAPI.Web
+@if (Features == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<dl>
+    <dt>Type </dt>
+    <dd>@Features.Type </dd>
+
+    <dt>TrackHref </dt>
+    <dd>@Features.TrackHref </dd>
+
+    <dt>TimeSignature </dt>
+    <dd>@Features.TimeSignature </dd>
+
+    <dt>Tempo </dt>
+    <dd>@Features.Tempo </dd>
+
+    <dt>Speechiness </dt>
+    <dd>@Features.Speechiness </dd>
+
+    <dt>Mode </dt>
+    <dd>@Features.Mode </dd>
+
+    <dt>Loudness </dt>
+    <dd>@Features.Loudness </dd>
+
+    <dt>Uri </dt>
+    <dd>@Features.Uri </dd>
+
+    <dt>Liveness </dt>
+    <dd>@Features.Liveness </dd>
+
+    <dt>Instrumentalness </dt>
+    <dd>@Features.Instrumentalness </dd>
+
+    <dt>Id </dt>
+    <dd>@Features.Id </dd>
+
+    <dt>Energy </dt>
+    <dd>@Features.Energy </dd>
+
+    <dt>DurationMs </dt>
+    <dd>@Features.DurationMs </dd>
+
+    <dt>Danceability </dt>
+    <dd>@Features.Danceability </dd>
+
+    <dt>AnalysisUrl </dt>
+    <dd>@Features.AnalysisUrl </dd>
+
+    <dt>Acousticness </dt>
+    <dd>@Features.Acousticness </dd>
+
+    <dt>Key </dt>
+    <dd>@Features.Key </dd>
+
+    <dt>Valence </dt>
+    <dd>@Features.Valence </dd>
+</dl>
+}
+
+@code {
+    [Parameter]
+    public TrackAudioFeatures? Features { get; set; }
+}

@@ -1,0 +1,22 @@
+﻿@page "/fetchdata"
+@using AUDIO.NET.APP.Shared
+@using SpotifyAPI.Web
+@inject HttpClient Http
+
+<PageTitle>Track Data</PageTitle>
+<div style="display:flex; flex-direction: row;justify-content: space-around;">
+    <TrackInfo Track="track"></TrackInfo>
+    <TrackFeatures Features="features"></TrackFeatures>
+</div>
+
+
+@code {
+    private TrackAudioFeatures? features;
+    private FullTrack? track;
+
+    protected override async Task OnInitializedAsync()
+    {
+        features = await Http.GetFromJsonAsync<TrackAudioFeatures>("player/features");
+        track = await Http.GetFromJsonAsync<FullTrack>("player/track");
+    }
+}

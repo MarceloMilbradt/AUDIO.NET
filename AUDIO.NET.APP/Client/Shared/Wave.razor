@@ -1,0 +1,25 @@
+﻿<svg viewBox="0 0 100 10" class="wave">
+    @for (var i = 0; i < Levels.Count; i += step)
+    {
+        var loudness = Levels[i];
+        var h = Math.Round(loudness * 100) / 2;
+        h = Math.Max(h, 1);
+        var y1 = Format(50d - h);
+        var y2 = Format(50d + h);
+        var x = Format(i / 10d);
+        <line x1="@x%" y1="@y1%" x2="@x%" y2="@y2%" stroke="rgba( @Color ,1 )" stroke-width="0.5%" />
+    }
+</svg>
+
+@code {
+    [Parameter]
+    public List<double> Levels { get; set; }
+    [Parameter]
+    public string Color { get; set; } = "0,0,0";
+    public int step = 10;
+    public string Format(double d)
+    {
+        var culture = System.Globalization.CultureInfo.InvariantCulture;
+        return d.ToString("0.00", culture);
+    }
+}

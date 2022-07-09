@@ -1,4 +1,4 @@
-﻿using AUDIO.NET.APP.Shared.Interfaces;
+﻿using AUDIO.NET.APP.Server.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SpotifyAPI.Web;
@@ -18,7 +18,7 @@ namespace AUDIO.NET.APP.Server.Controllers
             _spotifyListener = listener;
         }
         [HttpGet]
-        public async Task<PrivateUser> GetFeatures()
+        public async Task<PrivateUser?> GetFeatures()
         {
             try
             {

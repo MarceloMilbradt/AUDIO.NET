@@ -1,14 +1,15 @@
 ﻿@page "/"
-@using AUDIO.NET.APP.Shared
 @using SpotifyAPI.Web;
 @inject HttpClient Http
 
 <PageTitle>Home</PageTitle>
 
-<h1>Spotify Led Controller</h1>
-<br />
+
 @if (user == null)
 {
+    <h1>Spotify Led Controller</h1>
+    <br />
+    <h3>Waiting...</h3>
     <div>
         <NavLink class="nav-link" href="login">
             <span class="oi oi-lock-locked" aria-hidden="true"></span> LogIn
@@ -17,7 +18,7 @@
 }
 else
 {
-    <p>Hello, @user.DisplayName!</p>
+    <Track></Track>
 }
 
 @code {
@@ -27,7 +28,6 @@ else
     {
 
         user = await Http.GetFromJsonAsync<PrivateUser>("user");
-        if (user != null)
-            Http.GetAsync("Listen");
+        if (user != null) await Http.GetAsync("Listen");
     }
 }

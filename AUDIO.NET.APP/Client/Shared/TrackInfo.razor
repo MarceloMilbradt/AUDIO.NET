@@ -1,18 +1,23 @@
 ﻿@using SpotifyAPI.Web
 @if (Track == null)
 {
-    <p><em>Loading...</em></p>
+    <p><em>Waiting...</em></p>
 }
 else
 {
     <div>
         <h2>@Track.Name</h2>
         <p>@Track.Album.Name @Track.Album.ReleaseDate - @Track.Artists.First().Name</p>
-        <img src="@Track.Album.Images.First().Url" />
+        <img src="@GetMediumImage(Track.Album.Images)" />
     </div>
 }
 
 @code {
     [Parameter]
     public FullTrack? Track { get; set; }
+    public string GetMediumImage(List<Image> images)
+    {
+        if (images.Count == 0) return images.ElementAt(0).Url;
+        return images.ElementAt(1).Url;
+    }
 }

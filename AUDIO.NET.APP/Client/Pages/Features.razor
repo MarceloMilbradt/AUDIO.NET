@@ -1,0 +1,41 @@
+﻿@page "/features"
+@using AUDIO.NET.APP.Shared
+@using Microsoft.AspNetCore.SignalR.Client
+@using SpotifyAPI.Web
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@implements IAsyncDisposable
+
+<TrackFeatures Features="features"></TrackFeatures>
+
+@code {
+    private TrackAudioFeatures? features;
+    private HubConnection? hubConnection;
+
+    private async Task Connect()
+    {
+        hubConnection = new HubConnectionBuilder().AddNewtonsoftJsonProtocol().WithUrl(NavigationManager.ToAbsoluteUri("/trackhub")).Build();
+
+        hubConnection.On<TrackDTO>("TrackChange", newTrack =>
+        {
+            features = newTrack.Features;
+            StateHasChanged();
+        });
+
+        await hubConnection.StartAsync();
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Connect();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if(hubConnection != null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+}

@@ -13,43 +13,36 @@ app.get('/:color', (req, res) => {
     let newColor = req.params.color;
 
     if (newColor === prevColor)
-        res.send(false);
+        return res.send(false);
 
     if (newColor == 'default')
         goToDefault()
     else
         changeColor(newColor);
 
-    prevColor = newColor;
-    res.send(true);
+   prevColor = newColor;
+   return  res.send(true);
 })
 
 const goToDefault = async () => {
+    const device = new TuyAPI(config);
+    console.log("Reset Colour of device");
     await device.find();
     await device.connect();
-
-    await device.set({
-        data: {
-            '21': 'scene',
-            '24': '00000000011a',
-        }, multiple: true
-    });
+    await device.set({ dps: '21', set: 'scene' });
+    await device.set({ dps: '24', set: "00000000011a" });
 
     device.disconnect();
 }
 
 
 const changeColor = async (color) => {
+    const device = new TuyAPI(config);
+    console.log("Trying to set Colour to: " + color);
     await device.find();
     await device.connect();
-    await device.set({
-        data: {
-            '21': 'colour',
-            '24': color,
-        }, multiple: true
-    });
-
-
+    await device.set({ dps: '21', set: 'colour' });
+    await device.set({ dps: '24', set: color });
     device.disconnect();
 }
 

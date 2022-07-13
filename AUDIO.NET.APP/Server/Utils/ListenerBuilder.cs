@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AUDIO.NET.APP.Server.Utils.Extensions
 {
-    public class ListenerBuilder : IBuildStage, IClientSecretSelectionStage, IClientIdSelectionStage, IRedirectUrlSelectionStage
+    public class ListenerBuilder : IBuildStage
     {
         string _url = String.Empty;
         string _clientId = String.Empty;

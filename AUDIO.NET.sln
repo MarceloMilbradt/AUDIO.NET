@@ -14,6 +14,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AUDIO.NET.APP.Shared", "AUD
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "ConnectorServer", "ConnectorServer\ConnectorServer.njsproj", "{19C550D9-8B13-4720-A430-2DFE88F12AF5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartLedKit", "DeviceHandler\SmartLedKit.csproj", "{5461B06C-5E96-408F-AE46-8907715BA433}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartLedKit.Core", "DeviceHandler.Core\SmartLedKit.Core.csproj", "{C038A135-0639-4FE4-BBDA-26D255C0F8FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +40,14 @@ Global
 		{19C550D9-8B13-4720-A430-2DFE88F12AF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19C550D9-8B13-4720-A430-2DFE88F12AF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19C550D9-8B13-4720-A430-2DFE88F12AF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5461B06C-5E96-408F-AE46-8907715BA433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5461B06C-5E96-408F-AE46-8907715BA433}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5461B06C-5E96-408F-AE46-8907715BA433}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5461B06C-5E96-408F-AE46-8907715BA433}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C038A135-0639-4FE4-BBDA-26D255C0F8FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C038A135-0639-4FE4-BBDA-26D255C0F8FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C038A135-0639-4FE4-BBDA-26D255C0F8FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C038A135-0639-4FE4-BBDA-26D255C0F8FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

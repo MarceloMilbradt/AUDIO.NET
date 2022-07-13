@@ -23,7 +23,7 @@ namespace AUDIO.NET.APP.Server.Services
         IBuildStage AndClientSecret(string clientSecret);
     }
 
-    public interface IBuildStage
+    public interface IBuildStage : IClientSecretSelectionStage, IClientIdSelectionStage, IRedirectUrlSelectionStage
     {
         SpotifyListener Build();
     }

@@ -55,14 +55,5 @@ app.MapControllers();
 app.MapFallbackToFile("index.html");
 app.MapHub<TrackHub>("/trackhub");
 
-
-Process process = new Process();
-process.StartInfo.UseShellExecute = false;
-process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-process.StartInfo.FileName = "app-win.exe";
-process.Start();
-app.Lifetime.ApplicationStopping.Register(
-    () => process.Kill()
-);
 app.Run();
 

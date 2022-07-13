@@ -15,7 +15,7 @@ namespace AUDIO.NET.APP.Server.Utils
         {
             var web = new HtmlWeb();
             var doc = web.Load(url);
-           
+
             var mainDiv = doc.GetElementbyId("main");
             var target = mainDiv
                 .FirstChild
@@ -44,8 +44,8 @@ namespace AUDIO.NET.APP.Server.Utils
             return new HSV
             {
                 h = (int)Math.Round(color.GetHue()),
-                s = (int)Math.Round(((max == 0) ? 0 : 1d - (1d * min / max)) * 1000),
-                v = 1000,
+                s = Math.Clamp((int)Math.Round(((max == 0) ? 0 : 1d - (1d * min / max)) * 1200),0,1000),
+                v = Math.Clamp((int)Math.Round(max / 255d * 1300), 500, 1000),
             };
         }
 

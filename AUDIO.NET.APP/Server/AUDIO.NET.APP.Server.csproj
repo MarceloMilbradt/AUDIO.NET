@@ -18,20 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DeviceHandler\SmartLedKit.csproj" />
     <ProjectReference Include="..\Client\AUDIO.NET.APP.Client.csproj" />
     <ProjectReference Include="..\Shared\AUDIO.NET.APP.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="device.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="app-win.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 

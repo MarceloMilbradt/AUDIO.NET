@@ -1,9 +1,8 @@
-
 const TuyAPI = require('tuyapi');
 const express = require('express');
 const fs = require('fs');
 const config = JSON.parse(fs.readFileSync('device.json', 'utf8'));
-
+const { devices, defaults}= config;
 const app = express()
 const port = 3000
 
@@ -25,25 +24,29 @@ app.get('/:color', (req, res) => {
 })
 
 const goToDefault = async () => {
-    const device = new TuyAPI(config);
-    console.log("Reset Colour of device");
-    await device.find();
-    await device.connect();
-    await device.set({ dps: '21', set: 'scene' });
-    await device.set({ dps: '24', set: "00000000011a" });
+    await devices.forEach(async conf => {
+        const device = new TuyAPI(conf);
+        console.log("Reset Colour of device");
+        await device.find();
+        await device.connect();
+        await device.set({ dps: '21', set: defaults.mode });
+        await device.set({ dps: '24', set: defaults.value });
 
-    device.disconnect();
+        device.disconnect();
+    });
 }
 
 
 const changeColor = async (color) => {
-    const device = new TuyAPI(config);
-    console.log("Trying to set Colour to: " + color);
-    await device.find();
-    await device.connect();
-    await device.set({ dps: '21', set: 'colour' });
-    await device.set({ dps: '24', set: color });
-    device.disconnect();
+    await devices.forEach(async conf => {
+        const device = new TuyAPI(conf);
+        console.log("Trying to set Colour to: " + color);
+        await device.find();
+        await device.connect();
+        await device.set({ dps: '21', set: 'colour' });
+        await device.set({ dps: '24', set: color });
+        device.disconnect();
+    });
 }
 
 
@@ -52,7 +55,7 @@ app.listen(port, () => {
 })
 
 
-const device = new TuyAPI(config);
+const device = new TuyAPI(devices[0]);
 
 
 

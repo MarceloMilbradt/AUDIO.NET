@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace AUDIO.NET.APP.Server.Services
 {
+    [Obsolete]
     public interface ISpotify
     {
         Task Connect(string code);

@@ -27,7 +27,7 @@
         hubConnection.On<TrackDTO>("TrackChange", newTrack =>
         {
             track = newTrack.Track;
-            color = newTrack.Color;
+            color = newTrack.RGBColor;
             levels = newTrack.Levels;
             bgcolor = $"";
             StateHasChanged();

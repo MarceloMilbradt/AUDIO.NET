@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace AUDIO.NET.APP.Server.Utils
 { 
+    [Obsolete]
     public static class DeviceConnector
     {
         public static void ChangeColor(HSV color)

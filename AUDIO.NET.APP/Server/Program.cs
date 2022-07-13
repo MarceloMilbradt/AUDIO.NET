@@ -1,15 +1,21 @@
 using AUDIO.NET.APP.Server.Hubs;
+using AUDIO.NET.APP.Server.Implementation;
 using AUDIO.NET.APP.Server.Services;
-using AUDIO.NET.APP.Server.Utils.Extensions;
+using AUDIO.NET.APP.Server.Services.Implementation;
+using AUDIO.NET.APP.Server.Utils;
+using MediatR;
 using Microsoft.AspNetCore.ResponseCompression;
 using Serilog;
 using Serilog.Sinks.File;
+using SmartLedKit;
 using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddMediatR(typeof(Program));
 builder.Services.AddSignalR().AddNewtonsoftJsonProtocol();
 builder.Services.AddResponseCompression(options => 
     options.MimeTypes = ResponseCompressionDefaults
@@ -17,20 +23,26 @@ builder.Services.AddResponseCompression(options =>
     .Concat(new[] {"application/octect-stream"})
 );
 
+var servicesConfiguration = FileManager.ReadFromJsonFile<Configuration>("configs.json");
+
 Log.Logger = new LoggerConfiguration()
     .WriteTo.File("log-.log", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
 builder.Services.AddLogging(loggingBuilder =>loggingBuilder.AddSerilog(Log.Logger, dispose: true));
 
-var spotifyListener = new ListenerBuilder()
-    .UseRedirectUrl("https://localhost:5001/auth/Token")
-    .WithClientId("18037b72c0344bffa9a093fdb0c9c3de")
-    .AndClientSecret("55bf9ad995f64409bb4f5649d773d1bf")
-    .Build();
 
 
-builder.Services.AddSingleton<ISpotify>(spotifyListener);
+builder.Services.AddSingleton<ISpotifyAPI>(new SpotifyApi(servicesConfiguration));
+builder.Services.AddSingleton<ISmartLedManager>(
+    new SmartLedManager(
+        servicesConfiguration.tuya.accessId,
+        servicesConfiguration.tuya.apiSecret,
+        servicesConfiguration.tuya.anyDeviceId
+        )
+    );
+
+builder.Services.AddHostedService<SpotifyHostedService>();
 
 var app = builder.Build();
 app.UseResponseCompression();

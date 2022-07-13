@@ -28,6 +28,5 @@ else
     {
 
         user = await Http.GetFromJsonAsync<PrivateUser>("user");
-        if (user != null) await Http.GetAsync("Listen");
     }
 }

@@ -13,13 +13,14 @@ namespace AUDIO.NET.APP.Shared
         public FullTrack? Track { get; }
         public TrackAudioFeatures? Features { get; }
         public List<double> Levels { get; }
-        public string Color { get; }
-
+        public string RGBColor { get; }
+        public Color Color { get; }
         public TrackDTO(FullTrack? track, TrackAudioFeatures? features, Color color, TrackAudioAnalysis analysis)
         {
             Track = track;
             Features = features;
-            Color = $"{color.R},{color.G},{color.B}";
+            RGBColor = $"{color.R},{color.G},{color.B}";
+            Color = color;
             if (analysis != null)
             {
                 Levels = new WaveForm().FromTrackAnalysis(analysis);

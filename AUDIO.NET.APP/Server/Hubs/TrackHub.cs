@@ -6,16 +6,16 @@ namespace AUDIO.NET.APP.Server.Hubs
 {
     public class TrackHub : Hub
     {
-        ISpotify _spotify;
+        ISpotifyAPI _spotify;
 
         public TrackHub(IServiceProvider serviceProvider)
         {
-            _spotify = serviceProvider.GetRequiredService<ISpotify>();
+            _spotify = serviceProvider.GetRequiredService<ISpotifyAPI>();
         }
 
         public override async Task OnConnectedAsync()
         {
-            await SendTrack(await _spotify.GetFullInfo());
+            await SendTrack(await _spotify.GetFullInfo(await _spotify.GetCurrentTrack()));
             await base.OnConnectedAsync();
         }
         public static async Task SendTrackTo(IClientProxy clients, TrackDTO track)

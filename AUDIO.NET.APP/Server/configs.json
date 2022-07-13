@@ -1,0 +1,12 @@
+{
+  "spotify": {
+    "redirectUrl": "https://localhost:5001/auth/Token",
+    "clientId": "18037b72c0344bffa9a093fdb0c9c3de",
+    "clientSecret": "55bf9ad995f64409bb4f5649d773d1bf"
+  },
+  "tuya": {
+    "accessId": "spexfyx3uantd4uu73vh",
+    "apiSecret": "c29d6bfd42f64f8692470091ccef610a",
+    "anyDeviceId": "eb2be5feff08124bc3die6"
+  }
+}

@@ -5,9 +5,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <OutputType>WinExe</OutputType>
+    <AssemblyName>SmartLedManager.App</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="LazyCache" Version="2.4.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="6.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.6" />
@@ -18,9 +21,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DeviceHandler\SmartLedKit.csproj" />
+    <ProjectReference Include="..\..\SmartLedKit\SmartLedKit.csproj" />
     <ProjectReference Include="..\Client\AUDIO.NET.APP.Client.csproj" />
     <ProjectReference Include="..\Shared\AUDIO.NET.APP.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="configs.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 

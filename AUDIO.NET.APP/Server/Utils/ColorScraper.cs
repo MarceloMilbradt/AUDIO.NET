@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using LazyCache;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -24,7 +25,9 @@ namespace AUDIO.NET.APP.Server.Utils
                 .FirstChild
                 .FirstChild
                 .FirstChild;
-            return GetColorForElement(target);
+
+            var color = GetColorForElement(target);
+            return color;
         }
 
         private static Color GetColorForElement(HtmlNode node)

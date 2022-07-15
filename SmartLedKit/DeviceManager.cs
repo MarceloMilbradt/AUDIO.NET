@@ -12,7 +12,7 @@ namespace SmartLedKit
 {
     public class DeviceManager : IDeviceManager
     {
-        private List<IDevice> _devices = new List<IDevice>();
+        private Dictionary<string, IDevice> _devices = new Dictionary<string, IDevice>();
         TuyaApi.Region _region = TuyaApi.Region.WesternAmerica;
         string _accessId = string.Empty;
         string _apiSecret = string.Empty;
@@ -25,6 +25,16 @@ namespace SmartLedKit
             this._apiSecret = apiSecret;
             this._anyDeviceId = anyDeviceId;
         }
+        public void StartSearchingForDevices(int minutes, CancellationToken token)
+        {
+            Task.Run(async () => {
+                while (!token.IsCancellationRequested)
+                {
+                    await FindDevices();
+                    await Task.Delay(TimeSpan.FromMinutes(minutes), token);
+                }
+            }, token);
+        }
 
         public async Task FindDevices()
         {
@@ -33,41 +43,54 @@ namespace SmartLedKit
             foreach (var device in devicesInApi)
             {
                 var dev = new Device(device.Ip, device.LocalKey, device.Id);
-                _devices.Add(dev);
+                if (!HasDevice(device.Id))
+                    _devices.Add(dev.DeviceId, dev);
             }
 
             var scanner = new Scanner(ProtocolVersion.V33);
             scanner.OnNewDeviceInfoReceived += async (object? sender, DeviceScanInfo e) =>
             {
-                var device = _devices.FirstOrDefault(d => d.GetId() == e.GwId);
-                device?.SetIp(e.IP);
-                device?.CreateDefault();
-                var isOn = await device?.IsOn();
-                if (!isOn) device?.TurnOn();
+                var hasDevice = TryGetDevice(e.GwId!, out var device);
+                if (!hasDevice) return;
+
+                device.SetIp(e.IP!);
+                device.CreateDefault();
+                var isOn = await device.IsOn();
+                if (!isOn) device.TurnOn();
             };
-            var token = new CancellationTokenSource();            
+            var token = new CancellationTokenSource();
             scanner.Start(token.Token);
             await Task.Delay(_timeout);
             token.Cancel();
         }
         public async Task SetDpsForAll(IDictionary<DataPoint, object> dps)
         {
-            var tasks = _devices.Select(device => device.Set(dps));
+            var devices = GetAllDevices();
+            var tasks = devices.Select(device => device.Set(dps));
             await Task.WhenAll(tasks);
         }
         public async Task TurnOnAll()
         {
-            var tasks = _devices.Select(device => device.TurnOn());
+            var devices = GetAllDevices();
+            var tasks = devices.Select(device => device.TurnOn());
             await Task.WhenAll(tasks);
         }
         public async Task TurnOffAll()
         {
-            var tasks = _devices.Select(device => device.TurnOff());
+            var devices = GetAllDevices();
+            var tasks = devices.Select(device => device.TurnOff());
             await Task.WhenAll(tasks);
         }
+
+        private Dictionary<string, IDevice>.ValueCollection GetAllDevices()
+        {
+            return _devices.Values;
+        }
+
         public async Task ResetAll()
         {
-            var tasks = _devices.Select(device => device.Reset());
+            var devices = GetAllDevices();
+            var tasks = devices.Select(device => device.Reset());
             await Task.WhenAll(tasks);
         }
         public async Task SetDpsForDevice(string id, IDictionary<DataPoint, object> dps)
@@ -92,7 +115,16 @@ namespace SmartLedKit
         }
         public IDevice GetDevice(string id)
         {
-            return _devices.FirstOrDefault(d => d.GetId() == id);
+            _devices.TryGetValue(id, out var deviceFound);
+            return deviceFound!;
+        }
+        public bool HasDevice(string id)
+        {
+            return _devices.ContainsKey(id);
+        }
+        public bool TryGetDevice(string id, out IDevice deviceFound)
+        {
+            return _devices.TryGetValue(id, out deviceFound);
         }
     }
 }

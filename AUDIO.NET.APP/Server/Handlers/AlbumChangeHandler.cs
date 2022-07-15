@@ -9,21 +9,31 @@ namespace AUDIO.NET.APP.Server.Handlers
     public class AlbumChangeHandler : INotificationHandler<AlbumChangeNotification>
     {
         private readonly ISmartLedManager _ledManager;
-        public AlbumChangeHandler(ISmartLedManager ledManager)
+        private readonly ILogger<AlbumChangeHandler> _logger;
+        public AlbumChangeHandler(ISmartLedManager ledManager, ILogger<AlbumChangeHandler> logger)
         {
             _ledManager = ledManager;
+            _logger = logger;
         }
 
         public async Task Handle(AlbumChangeNotification notification, CancellationToken cancellationToken)
         {
-            var color = notification.NewColor;
-            if (string.IsNullOrEmpty(color))
+            try
             {
-               await _ledManager.ResetAll();
+
+                var color = notification.NewColor;
+                if (string.IsNullOrEmpty(color))
+                {
+                    await _ledManager.ResetAll();
+                }
+                else
+                {
+                    await _ledManager.SetColorToAll(color);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                _ledManager.SetColorToAll(color);
+                _logger.LogError(ErrorMessages.ERROR_WHILE_CONNECTING_DEVICES, ex);
             }
 
         }

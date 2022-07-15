@@ -11,12 +11,20 @@ namespace SmartLedKit
     {
         public SmartLedManager(string accessId, string apiSecret, string anyDeviceId) : base(5000, accessId, apiSecret, anyDeviceId)
         {
-            FindDevices();
+            try
+            {
+                var cts = new CancellationTokenSource();
+                StartSearchingForDevices(25, cts.Token);
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         public async Task SetColorToAll(string color)
         {
-            await SetDpsForAll(new Dictionary<DataPoint, object> { { DataPoint.COLOR, color }, { DataPoint.MODE, "colour"} });
+            await SetDpsForAll(new Dictionary<DataPoint, object> { { DataPoint.COLOR, color }, { DataPoint.MODE, "colour" } });
         }
     }
 }

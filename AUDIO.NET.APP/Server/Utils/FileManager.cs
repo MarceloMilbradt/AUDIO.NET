@@ -25,11 +25,12 @@ namespace AUDIO.NET.APP.Server.Utils
             TextReader reader = null;
             try
             {
+                if (!File.Exists(filePath)) File.Create(filePath);
                 reader = new StreamReader(filePath);
                 var fileContents = reader.ReadToEnd();
-                return JsonConvert.DeserializeObject<T>(fileContents);
+                return JsonConvert.DeserializeObject<T>(fileContents)!;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return default(T);
             }

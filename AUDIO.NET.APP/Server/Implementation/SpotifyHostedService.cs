@@ -70,27 +70,18 @@ namespace AUDIO.NET.APP.Server.Implementation
             {
                 var progress = Convert.ToInt32(currentlyPlaying.ProgressMs);
                 var progressPercentage = progress * 100f / track.DurationMs;
-                if (progressPercentage > 20 && progressPercentage < 80)
+                if (progressPercentage > 40 && progressPercentage < 80)
                 {
-                    if (track.DurationMs / 10 > 30_000)
-                    {
-                        nextIterationIn = track.DurationMs / 100;
-                    }
-                    else
-                    {
-                        nextIterationIn = track.DurationMs / 10;
-
-                    }
-
+                    nextIterationIn = 5_000;
                 }
                 else
                 {
-                    nextIterationIn = 1000;
+                    nextIterationIn = 1_000;
                 }
             }
             else
             {
-                nextIterationIn = 1000;
+                nextIterationIn = 1_000;
             }
 
             return nextIterationIn;

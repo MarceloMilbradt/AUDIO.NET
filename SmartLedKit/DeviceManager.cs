@@ -27,11 +27,24 @@ namespace SmartLedKit
         }
         public void StartSearchingForDevices(int minutes, CancellationToken token)
         {
-            Task.Run(async () => {
+            Task.Run(async () =>
+            {
                 while (!token.IsCancellationRequested)
                 {
-                    await FindDevices();
-                    await Task.Delay(TimeSpan.FromMinutes(minutes), token);
+                    try
+                    {
+                        await FindDevices();
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                    finally
+                    {
+                        await Task.Delay(TimeSpan.FromMinutes(minutes), token);
+
+                    }
+
                 }
             }, token);
         }
@@ -54,9 +67,9 @@ namespace SmartLedKit
                 if (!hasDevice) return;
 
                 device.SetIp(e.IP!);
-                device.CreateDefault();
+                await device.CreateDefault();
                 var isOn = await device.IsOn();
-                if (!isOn) device.TurnOn();
+                if (!isOn) await device.TurnOn();
             };
             var token = new CancellationTokenSource();
             scanner.Start(token.Token);

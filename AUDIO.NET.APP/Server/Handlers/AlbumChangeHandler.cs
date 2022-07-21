@@ -24,7 +24,7 @@ namespace AUDIO.NET.APP.Server.Handlers
                 var color = notification.NewColor;
                 if (string.IsNullOrEmpty(color))
                 {
-                    await _ledManager.ResetAll();
+                   // await _ledManager.ResetAll();
                 }
                 else
                 {

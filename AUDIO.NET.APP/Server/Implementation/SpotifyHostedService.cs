@@ -11,6 +11,10 @@ namespace AUDIO.NET.APP.Server.Implementation
 {
     public class SpotifyHostedService : BackgroundService
     {
+        private PeriodicTimer timerWhileListening = new PeriodicTimer(TimeSpan.FromMilliseconds(500));
+        private PeriodicTimer timerWhileWaiting = new PeriodicTimer(TimeSpan.FromSeconds(30));
+        private PeriodicTimer? timer;
+
         private readonly ILogger<SpotifyHostedService> _logger;
         private readonly ISpotifyAPI _spotifyApi;
         private readonly IMediator _mediator;
@@ -23,14 +27,14 @@ namespace AUDIO.NET.APP.Server.Implementation
             _logger = logger;
             _mediator = mediator;
             _spotifyApi = spotifyApi;
+            timer = timerWhileListening;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
 
             _logger.LogInformation(ErrorMessages.NOW_LISTENING);
-            int nextIterationIn = 1000;
-            while (!stoppingToken.IsCancellationRequested)
+            while ( await timer.WaitForNextTickAsync() && !stoppingToken.IsCancellationRequested)
             {
                 try
                 {
@@ -40,14 +44,13 @@ namespace AUDIO.NET.APP.Server.Implementation
 
                         if (currentlyPlaying == null)
                         {
-                            _logger.LogInformation(ErrorMessages.NOW_PLAYING, "Nothing");
-                            nextIterationIn = 10000;
+                            timer = timerWhileWaiting;
                             await HandleNoTrackIsPlaying(stoppingToken);
                         }
                         else
                         {
+                            timer = timerWhileListening;
                             var track = (FullTrack)currentlyPlaying.Item;
-                            nextIterationIn = GetNextIterationTimeout(currentlyPlaying, track);
                             await HandleWhenTrackIsPlaying(track, stoppingToken);
                         }
                     }
@@ -56,13 +59,9 @@ namespace AUDIO.NET.APP.Server.Implementation
                 {
                     _logger.LogInformation(ErrorMessages.ERROR_WHILE_LISTENING, ex);
                 }
-                finally
-                {
-                    await Task.Delay(nextIterationIn, stoppingToken);
-                }
             }
         }
-
+        [Obsolete]
         private static int GetNextIterationTimeout(CurrentlyPlaying? currentlyPlaying, FullTrack track)
         {
             int nextIterationIn;
@@ -91,6 +90,7 @@ namespace AUDIO.NET.APP.Server.Implementation
         {
             if (_currentAlbumUrl != string.Empty)
             {
+                _logger.LogInformation(ErrorMessages.NOW_PLAYING, "Nothing");
                 _currentAlbumUrl = string.Empty;
                 await _mediator.Publish(new AlbumChangeNotification(_currentAlbumUrl), stoppingToken);
             }
